@@ -1,0 +1,16 @@
+---
+- name: Create group
+  group:
+    name: "{{ traefik_group }}"
+    state: present
+
+- name: Create user
+  user:
+    name: "{{ traefik_user }}"
+    group: "{{ traefik_group }}"
+    create_home: yes
+    home: "{{ traefik_base_path }}"
+    shell: "/bin/bash"
+
+- import_tasks: "config.yml"
+- import_tasks: "install.yml"

@@ -1,0 +1,26 @@
+http:
+  middlewares:
+{% if traefik_middlewares_https_redirect_enable %}
+    {{ traefik_middlewares_https_redirect_name }}:
+      redirectScheme:
+        scheme: "https"
+{% endif %}
+{% if traefik_middlewares_dashboard_authentication.enable %}
+    {{ traefik_middlewares_dashboard_authentication.name }}:
+      basicAuth:
+        realm: "{{ traefik_middlewares_dashboard_authentication.realm }}"
+        removeHeader: {{ traefik_middlewares_dashboard_authentication.remove_header }}
+        users:
+{% for user in traefik_middlewares_dashboard_authentication.users %}
+          - "{{ user }}"
+{% endfor %}
+{% endif %}
+{% if traefik_middlewares_cors.enable %}
+    {{ traefik_middlewares_cors.name }}:
+      headers:
+        accessControlAllowOrigin: "{{ traefik_middlewares_cors.allow_origin }}"
+{% if traefik_middlewares_cors.allow_credentials %}
+        accessControlAllowCredentials: {{ traefik_middlewares_cors.allow_credentials }}
+{% endif %}
+        addVaryHeader: {{ traefik_middlewares_cors.add_vary_header }}
+{% endif %}

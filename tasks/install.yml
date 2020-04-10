@@ -1,0 +1,40 @@
+---
+- name: Check if file with current installed version exists
+  stat:
+    path: "{{ traefik_base_path }}/VERSION"
+  register: stat_version_file
+
+- name: Get content of file with current installed version
+  slurp:
+    src: "{{ traefik_base_path }}/VERSION"
+  register: slurp_version_file
+  when: stat_version_file.stat.exists
+
+- name: Extract binary package
+  unarchive:
+    src: "{{ traefik_source }}"
+    dest: "{{ traefik_base_path }}"
+    remote_src: yes
+    owner: "{{ traefik_user }}"
+    group: "{{ traefik_group }}"
+  when: (not stat_version_file.stat.exists) or (slurp_version_file.content | b64decode != traefik_version)
+
+- name: Create file for saving current installed version
+  copy:
+    content: "{{ traefik_version }}"
+    dest: "{{ traefik_base_path }}/VERSION"
+    owner: "{{ traefik_user }}"
+    group: "{{ traefik_group }}"
+  when: (not stat_version_file.stat.exists) or (slurp_version_file.content | b64decode != traefik_version)
+
+- name: Upload systemd service file
+  template:
+    src: "traefik.service.j2"
+    dest: "/etc/systemd/system/{{ traefik_systemd_service_name }}.service"
+
+- name: Enable/Start systemd service
+  systemd:
+    name: "{{ traefik_systemd_service_name }}.service"
+    daemon_reload: yes
+    enabled: yes
+    state: started

@@ -1,0 +1,15 @@
+[Unit]
+Description=Traefik reverse proxy
+After=network-online.target
+
+[Service]
+Restart=always
+
+AmbientCapabilities=CAP_NET_BIND_SERVICE
+User={{ traefik_user }}
+Group={{ traefik_group }}
+
+ExecStart={{ traefik_base_path }}/traefik --configfile={{ traefik_base_path }}/config/traefik.yml
+
+[Install]
+WantedBy=multi-user.target

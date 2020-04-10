@@ -1,0 +1,44 @@
+---
+traefik_user: "traefik"
+traefik_group: "{{ traefik_user }}"
+traefik_source: "https://github.com/containous/traefik/releases/download/{{ traefik_version }}/traefik_{{ traefik_version }}_linux_amd64.tar.gz"
+traefik_systemd_service_name: "traefik"
+traefik_base_path: "/opt/traefik"
+traefik_config_directory: "{{ traefik_base_path }}/config"
+traefik_dynamic_config_directory: "{{ traefik_config_directory }}/dynamic"
+traefik_dynamic_config_watch: yes
+traefik_loglevel: INFO
+
+traefik_tls:
+  enable: yes
+  min_verison: "VersionTLS12"
+  ciphersuites:
+    - "TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384"
+    - "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384"
+    - "TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256"
+    - "TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
+    - "TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305"
+    - "TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305"
+traefik_tls_letsencrypt_challenges_http:
+  enable: no
+traefik_tls_letsencrypt_challenges_tls:
+  enable: no
+traefik_default_cert_resovler: ""
+
+traefik_middlewares_https_redirect_enable: "{{ traefik_tls.enable }}"
+traefik_middlewares_https_redirect_name: "https_redirect"
+traefik_middlewares_dashboard_authentication:
+  enable: no
+traefik_middlewares_cors:
+  enable: no
+
+traefik_dashboard:
+  enable: yes
+  rule: "Host(`traefik.{{ ansible_fqdn }}`)"
+  name: "internal_dashboard"
+  tls_cert_resolver: "{{ traefik_default_cert_resovler }}"
+  https_redirect: yes
+  additional_middlewares: []
+
+traefik_additional_entrypoints: ""
+traefik_additional_providers: ""

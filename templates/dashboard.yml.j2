@@ -1,0 +1,29 @@
+http:
+  routers:
+    {{ traefik_dashboard.name }}-http:
+      rule: "{{ traefik_dashboard.rule }}"
+      service: "api@internal"
+      entryPoints:
+        - "http"
+{% if traefik_middlewares_https_redirect_enable %}
+      middlewares:
+        - "https_redirect"
+{% endif %}
+{% if traefik_tls.enable %}
+    {{ traefik_dashboard.name }}-https:
+      rule: "{{ traefik_dashboard.rule }}"
+      tls:
+        certResolver: "{{ traefik_dashboard.tls_cert_resolver }}"
+      service: "api@internal"
+      entryPoints:
+        - "https"
+{% if traefik_middlewares_dashboard_authentication.enable or traefik_dashboard.additioonal_middlewares | length > 0 %}
+      middlewares:
+{% if traefik_middlewares_dashboard_authentication.enable %}
+        - "{{ traefik_middlewares_dashboard_authentication.name }}"
+{% endif %}
+{% for middleware in traefik_dashboard.additional_middlewares %}
+        - "{{ middleware }}"
+{% endfor %}
+{% endif %}
+{% endif %}

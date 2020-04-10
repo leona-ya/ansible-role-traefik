@@ -1,0 +1,5 @@
+---
+- name: restart traefik service
+  systemd:
+    name: "{{ traefik_systemd_service_name }}.service"
+    state: restarted

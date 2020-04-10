@@ -1,0 +1,50 @@
+---
+- name: Create config directory
+  file:
+    path: "{{ traefik_config_directory }}"
+    state: directory
+    owner: "{{ traefik_user }}"
+    group: "{{ traefik_group }}"
+
+- name: Add static config to host
+  template:
+    src: "traefik.yml.j2"
+    dest: "{{ traefik_config_directory }}/traefik.yml"
+    owner: "{{ traefik_user }}"
+    group: "{{ traefik_group }}"
+  notify: restart traefik service
+
+- name: Create dynamic config directory
+  file:
+    path: "{{ traefik_dynamic_config_directory }}"
+    state: directory
+    owner: "{{ traefik_user }}"
+    group: "{{ traefik_group }}"
+
+- name: Add middlewares config to host
+  template:
+    src: "middlewares.yml.j2"
+    dest: "{{ traefik_dynamic_config_directory }}/middlewares.yml"
+    owner: "{{ traefik_user }}"
+    group: "{{ traefik_group }}"
+
+- name: Add tls config to host
+  template:
+    src: "tls.yml.j2"
+    dest: "{{ traefik_dynamic_config_directory }}/tls.yml"
+    owner: "{{ traefik_user }}"
+    group: "{{ traefik_group }}"
+
+- name: Remove dashboard config to host when disabled in config
+  file:
+    path: "{{ traefik_dynamic_config_directory }}/dashboard.yml"
+    state: absent
+  when: not traefik_dashboard.enable
+
+- name: Add dashboard config to host
+  template:
+    src: "dashboard.yml.j2"
+    dest: "{{ traefik_dynamic_config_directory }}/dashboard.yml"
+    owner: "{{ traefik_user }}"
+    group: "{{ traefik_group }}"
+  when: traefik_dashboard.enable

@@ -1,0 +1,40 @@
+providers:
+  file:
+    directory: "{{ traefik_dynamic_config_directory }}"
+    watch: {{ traefik_dynamic_config_watch }}
+  {{ traefik_additional_providers }}
+
+api:
+  dashboard: {{ traefik_dashboard.enable }}
+
+entryPoints:
+  http:
+    address: ":80"
+{% if traefik_tls.enable %}
+  https:
+    address: ":443"
+{% endif %}
+  {{ traefik_additional_entrypoints }}
+
+{% if traefik_tls.enable and (traefik_tls_letsencrypt_challenges_http.enable or traefik_tls_letsencrypt_challenges_tls.enable) %}
+certificatesResolvers:
+{% if traefik_tls_letsencrypt_challenges_http.enable %}
+  {{ traefik_tls_letsencrypt_challenges_http.name }}:
+    acme:
+      httpChallenge:
+        entryPoint: {{ traefik_tls_letsencrypt_challenges_http.entryPoint }}
+      email: "{{ traefik_tls_letsencrypt_challenges_http.email }}"
+      storage: "{{ traefik_tls_letsencrypt_challenges_http.storage }}"
+{% endif %}
+{% if traefik_tls_letsencrypt_challenges_tls.enable %}
+  {{ traefik_tls_letsencrypt_challenges_tls.name }}:
+    acme:
+      tlsChallenge: {}
+      email: "{{ traefik_tls_letsencrypt_challenges_tls.email }}"
+      storage: "{{ traefik_tls_letsencrypt_challenges_tls.storage }}"
+{% endif %}
+{% endif %}
+
+log:
+  format: json
+  level: {{ traefik_loglevel }}
