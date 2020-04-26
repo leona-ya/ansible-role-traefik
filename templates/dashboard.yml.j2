@@ -17,7 +17,7 @@ http:
       service: "api@internal"
       entryPoints:
         - "https"
-{% if traefik_middlewares_dashboard_authentication.enable or traefik_dashboard.additioonal_middlewares | length > 0 %}
+{% if traefik_middlewares_dashboard_authentication.enable or traefik_dashboard.additional_middlewares | length > 0 %}
       middlewares:
 {% if traefik_middlewares_dashboard_authentication.enable %}
         - "{{ traefik_middlewares_dashboard_authentication.name }}"
