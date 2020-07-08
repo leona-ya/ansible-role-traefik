@@ -17,6 +17,7 @@
     remote_src: yes
     owner: "{{ traefik_user }}"
     group: "{{ traefik_group }}"
+  notify: restart traefik service
   when: (not stat_version_file.stat.exists) or (slurp_version_file.content | b64decode != traefik_version)
 
 - name: Create file for saving current installed version

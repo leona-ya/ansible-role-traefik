@@ -12,7 +12,7 @@ Ansible role for a traefik installation without docker
 | ------------- | -------- | ------------- | ------- |
 | `traefik_user` | User created for running the traefik service | traefik |
 | `traefik_group` | Group for the user created for the traefik service | `{{ traefik_user }}` |
-| `traefik_version` | Version of traefik that is going to be installed _(required)_ |  | 
+| `traefik_version` | Version of traefik that is going to be installed | `v2.2.2`  | 
 | `traefik_source` | Source of the wekan Installtion package | `https://github.com/containous/traefik/releases/download/{{ traefik_version }}/traefik_{{ traefik_version }}_linux_amd64.tar.gz` |
 | `traefik_systemd_service_name` | The name of the systemd service file | `traefik` |
 | `traefik_base_path` | Installation base path | `/opt/traefik` | Without trailing slash 
@@ -111,14 +111,6 @@ traefik_additional_entrypoints: |
 ## Dependencies
 This role does not have any dependencies.
 
-## Example Playbook
-
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
-```yaml
-- hosts: servers
-  roles:
-     - { role: em0lar.traefik, traefik_version: "v2.2.0"}
-```
 ## License
 
 GPL-3.0
