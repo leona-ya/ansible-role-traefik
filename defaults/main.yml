@@ -34,6 +34,8 @@ traefik_middlewares_dashboard_authentication:
   enable: no
 traefik_middlewares_cors:
   enable: no
+traefik_middlewares_hsts:
+  enable: no
 
 traefik_dashboard:
   enable: yes

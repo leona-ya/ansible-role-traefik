@@ -84,6 +84,18 @@ traefik_middlewares_cors:
   allow_origin: "*"
 ```
 
+##### HSTS
+The HTTPS-Redirect middleware is activated by default when TLS is activated with the name `https_redirect`, which can be modified with the `traefik_middlewares_https_redirect_name` variable. If you wanna disable this middleware use the following environment variable.
+```yaml
+traefik_middlewares_hsts:
+  enable: yes
+  name: "hsts"
+  seconds: "31536000"
+  preload: yes
+  include_sub_domains: no
+```
+
+
 #### Dashboard
 The default is that traefik dashboard is enabled and listens on `traefik.{{ ansible_fqdn }}`, as shown below. 
 ```yaml

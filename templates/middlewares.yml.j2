@@ -24,3 +24,14 @@ http:
 {% endif %}
         addVaryHeader: {{ traefik_middlewares_cors.add_vary_header }}
 {% endif %}
+{% if traefik_middlewares_hsts.enable %}
+    {{ traefik_middlewares_hsts.name }}:
+      headers:
+        stsSeconds: {{ traefik_middlewares_hsts.seconds }}
+{% if traefik_middlewares_hsts.include_sub_domains %}
+        stsIncludeSubdomains: {{ traefik_middlewares_hsts.include_sub_domains }}
+{% endif %}
+{% if traefik_middlewares_hsts.preload %}
+        stsPreload: {{ traefik_middlewares_hsts.preload }}
+{% endif %}
+{% endif %}
