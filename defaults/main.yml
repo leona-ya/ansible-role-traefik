@@ -4,8 +4,8 @@ traefik_user: "traefik"
 traefik_group: "{{ traefik_user }}"
 traefik_source: "https://github.com/containous/traefik/releases/download/{{ traefik_version }}/traefik_{{ traefik_version }}_linux_amd64.tar.gz"
 traefik_systemd_service_name: "traefik"
-traefik_base_path: "/opt/traefik"
-traefik_config_directory: "{{ traefik_base_path }}/config"
+traefik_base_path: "/var/lib/traefik"
+traefik_config_directory: "/etc/traefik"
 traefik_dynamic_config_directory: "{{ traefik_config_directory }}/dynamic"
 traefik_dynamic_config_watch: yes
 traefik_dynamic_config_files_paths:

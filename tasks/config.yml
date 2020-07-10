@@ -1,4 +1,11 @@
 ---
+- name: Create base directory
+  file:
+    path: "{{ traefik_base_path }}"
+    state: directory
+    owner: "{{ traefik_user }}"
+    group: "{{ traefik_group }}"
+
 - name: Create config directory
   file:
     path: "{{ traefik_config_directory }}"
