@@ -19,6 +19,7 @@ Ansible role for a traefik installation without docker
 | `traefik_config_directory` | Configuration directory path | `{{ traefik_base_path }}/config` | Without trailing slash
 | `traefik_dynamic_config_directory` | Dynamic configuration directory path | `{{ traefik_config_directory }}/dynamic` | Without trailing slash
 | `traefik_dynamic_config_watch` | Enable/Disable watching for changes in dynamic configuration directory | `yes` |
+| `traefik_dynamic_config_files_paths` | List containing paths to dynamic config files | `["traefik/*"]` |
 | `traefik_loglevel` | Loglevel specified in traefik.yml | `INFO` |
 
 ### Extra Options
