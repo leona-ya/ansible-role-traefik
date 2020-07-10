@@ -48,3 +48,11 @@
     owner: "{{ traefik_user }}"
     group: "{{ traefik_group }}"
   when: traefik_dashboard.enable
+
+- name: Add dynamic traefik configs to server
+  template:
+    src: "{{ item }}"
+    dest: "{{ traefik_dynamic_config_directory }}"
+    owner: traefik
+    group: traefik
+  with_fileglob: "{{ traefik_dynamic_files_paths }}"

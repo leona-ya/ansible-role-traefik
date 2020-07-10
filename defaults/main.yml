@@ -43,3 +43,6 @@ traefik_dashboard:
 
 traefik_additional_entrypoints: ""
 traefik_additional_providers: ""
+
+traefik_dynamic_files_paths:
+  - "traefik/{{ ansible_fqdn }}/*"
