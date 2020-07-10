@@ -55,4 +55,4 @@
     dest: "{{ traefik_dynamic_config_directory }}"
     owner: traefik
     group: traefik
-  with_fileglob: "{{ traefik_dynamic_files_paths }}"
+  with_fileglob: "{{ traefik_dynamic_config_files_paths }}"

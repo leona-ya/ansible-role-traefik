@@ -8,6 +8,8 @@ traefik_base_path: "/opt/traefik"
 traefik_config_directory: "{{ traefik_base_path }}/config"
 traefik_dynamic_config_directory: "{{ traefik_config_directory }}/dynamic"
 traefik_dynamic_config_watch: yes
+traefik_dynamic_config_files_paths:
+  - "traefik/*"
 traefik_loglevel: INFO
 
 traefik_tls:
@@ -43,6 +45,3 @@ traefik_dashboard:
 
 traefik_additional_entrypoints: ""
 traefik_additional_providers: ""
-
-traefik_dynamic_files_paths:
-  - "traefik/{{ ansible_fqdn }}/*"
