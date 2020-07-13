@@ -1,5 +1,5 @@
 ---
-traefik_version: "v2.2.4"
+traefik_version: "v2.2.5"
 traefik_user: "traefik"
 traefik_group: "{{ traefik_user }}"
 traefik_source: "https://github.com/containous/traefik/releases/download/{{ traefik_version }}/traefik_{{ traefik_version }}_linux_amd64.tar.gz"
