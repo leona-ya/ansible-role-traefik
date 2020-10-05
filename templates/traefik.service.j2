@@ -8,6 +8,9 @@ Restart=always
 AmbientCapabilities=CAP_NET_BIND_SERVICE
 User={{ traefik_user }}
 Group={{ traefik_group }}
+{% for env, val in traefik_environment_variables.items() %}
+Environment="{{ env }}={{ val }}"
+{% endfor %}
 
 ExecStart={{ traefik_base_path }}/traefik --configfile={{ traefik_config_directory }}/traefik.yml
 
