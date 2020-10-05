@@ -11,6 +11,7 @@ traefik_dynamic_config_watch: yes
 traefik_dynamic_config_files_paths:
   - "traefik/*"
 traefik_loglevel: INFO
+traefik_environment_variables: {}
 
 traefik_tls:
   enable: yes
@@ -25,6 +26,8 @@ traefik_tls:
 traefik_tls_letsencrypt_challenges_http:
   enable: no
 traefik_tls_letsencrypt_challenges_tls:
+  enable: no
+traefik_tls_letsencrypt_challenges_dns:
   enable: no
 traefik_default_cert_resovler: ""
 

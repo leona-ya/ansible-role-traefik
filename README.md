@@ -21,6 +21,7 @@ Ansible role for a traefik installation without docker
 | `traefik_dynamic_config_watch` | Enable/Disable watching for changes in dynamic configuration directory | `yes` |
 | `traefik_dynamic_config_files_paths` | List containing paths to dynamic config files | `["traefik/*"]` |
 | `traefik_loglevel` | Loglevel specified in traefik.yml | `INFO` |
+| `traefik_environment_variables` | A Dict of additional environment options | `{}` |
 
 ### Extra Options
 #### TLS + Let's Encrypt
@@ -53,6 +54,18 @@ traefik_tls_letsencrypt_challenges_tls:
   email: "test@example.org"
   name: "le_tls" # Name of the certificate resolver
   storage: "{{ traefik_base_path }}/acme_tls.json"
+
+# DNS-Challenge
+traefik_tls_letsencrypt_challenges_dns:
+  enable: yes
+  provider: acme-dns
+  delay: 0
+  disablePropagationCheck: "false"
+  resolvers:
+    - 1.1.1.1
+  email: "test@example.org"
+  name: "le_dns" # Name of the certificate resolver
+  storage: "{{ traefik_base_path }}/acme_dns.json"
 ```
 And please set the `traefik_default_cert_resovler` to the default cert resolver which you want to use for example for the dashboard.
 #### Middlewares
