@@ -120,6 +120,22 @@ traefik_dashboard:
   https_redirect: yes
   additional_middlewares: []
 ```
+#### Metrics
+It's possible to store the metrics of traefik in different backends. Supported is Datadog (`traefik_metrics_datadog`), InfluxDB (`traefik_metrics_influxdb`), Prometheus (`traefik_metrics_prometheus`) and StatsD (`traefik_metrics_statsd`).
+
+Here is an example with Prometheus:
+```yaml
+traefik_metrics_prometheus:
+  buckets:
+    - 0.1
+    - 0.3
+    - 1.2
+    - 5.0
+  addEntryPointsLabels: true
+  manualRouting: true
+```
+
+Have a look at the traefik docs for possible configuration values. These are directly passed into the configuration file. 
 
 #### Other
 ##### Providers

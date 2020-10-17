@@ -54,3 +54,31 @@ certificatesResolvers:
 log:
   format: json
   level: {{ traefik_loglevel }}
+
+{% if traefik_metrics_prometheus is defined or traefik_metrics_datadog is defined or traefik_metrics_statsd is defined or traefik_metrics_influxdb is defined %}
+metrics:
+{% if traefik_metrics_prometheus is defined %}
+  prometheus:
+{% for k, v in traefik_metrics_prometheus.items() %}
+    {{ k }}: {{ v }}
+{% endfor %}
+{% endif %}
+{% if traefik_metrics_datadog is defined %}
+  datadog:
+{% for k, v in traefik_metrics_datadog.items() %}
+    {{ k }}: {{ v }}
+{% endfor %}
+{% endif %}
+{% if traefik_metrics_statsd is defined %}
+  statsD:
+{% for k, v in traefik_metrics_statsd.items() %}
+    {{ k }}: {{ v }}
+{% endfor %}
+{% endif %}
+{% if traefik_metrics_influxdb is defined %}
+  influxDB:
+{% for k, v in traefik_metrics_influxdb.items() %}
+    {{ k }}: {{ v }}
+{% endfor %}
+{% endif %}
+{% endif %}
