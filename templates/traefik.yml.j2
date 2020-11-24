@@ -25,6 +25,9 @@ certificatesResolvers:
         entryPoint: {{ traefik_tls_letsencrypt_challenges_http.entryPoint }}
       email: "{{ traefik_tls_letsencrypt_challenges_http.email }}"
       storage: "{{ traefik_tls_letsencrypt_challenges_http.storage }}"
+{% if traefik_tls_letsencrypt_challenges_http.key_type is defined %}
+      keyType: "{{ traefik_tls_letsencrypt_challenges_http.key_type }}"
+{% endif %}
 {% endif %}
 {% if traefik_tls_letsencrypt_challenges_tls.enable %}
   {{ traefik_tls_letsencrypt_challenges_tls.name }}:
@@ -32,6 +35,9 @@ certificatesResolvers:
       tlsChallenge: {}
       email: "{{ traefik_tls_letsencrypt_challenges_tls.email }}"
       storage: "{{ traefik_tls_letsencrypt_challenges_tls.storage }}"
+{% if traefik_tls_letsencrypt_challenges_tls.key_type is defined %}
+      keyType: "{{ traefik_tls_letsencrypt_challenges_tls.key_type }}"
+{% endif %}
 {% endif %}
 {% if traefik_tls_letsencrypt_challenges_dns.enable %}
   {{ traefik_tls_letsencrypt_challenges_dns.name }}:
@@ -40,14 +46,17 @@ certificatesResolvers:
         provider: "{{ traefik_tls_letsencrypt_challenges_dns.provider }}"
         delayBeforeCheck: "{{ traefik_tls_letsencrypt_challenges_dns.delay | default(0) }}"
         disablePropagationCheck: {{ traefik_tls_letsencrypt_challenges_dns.disablePropagationCheck | default("false") }}
+        email: "{{ traefik_tls_letsencrypt_challenges_dns.email }}"
+        storage: "{{ traefik_tls_letsencrypt_challenges_dns.storage }}"
+{% if traefik_tls_letsencrypt_challenges_http.key_type is defined %}
+        keyType: "{{ traefik_tls_letsencrypt_challenges_http.key_type }}"
+{% endif %}
 {% if traefik_tls_letsencrypt_challenges_dns.resolvers is defined %}
         resolvers:
 {% for resolver in traefik_tls_letsencrypt_challenges_dns.resolvers | default([]) %}
           - {{ resolver }}
 {% endfor %}
 {% endif %}
-      email: "{{ traefik_tls_letsencrypt_challenges_dns.email }}"
-      storage: "{{ traefik_tls_letsencrypt_challenges_dns.storage }}"
 {% endif %}
 {% endif %}
 

@@ -47,6 +47,7 @@ traefik_tls_letsencrypt_challenges_http:
   name: "le_http" # Name of the certificate resolver
   entryPoint: "http"
   storage: "{{ traefik_base_path }}/acme_http.json"
+  key_type: "RSA4096" # optional, per default RSA4096
 
 # TLS-Challenge
 traefik_tls_letsencrypt_challenges_tls:
@@ -54,18 +55,20 @@ traefik_tls_letsencrypt_challenges_tls:
   email: "test@example.org"
   name: "le_tls" # Name of the certificate resolver
   storage: "{{ traefik_base_path }}/acme_tls.json"
+  key_type: "RSA4096" # optional, per default RSA4096
 
 # DNS-Challenge
 traefik_tls_letsencrypt_challenges_dns:
   enable: yes
   provider: acme-dns
-  delay: 0
-  disablePropagationCheck: "false"
-  resolvers:
-    - 1.1.1.1
   email: "test@example.org"
-  name: "le_dns" # Name of the certificate resolver
   storage: "{{ traefik_base_path }}/acme_dns.json"
+  delay: 0 # optional, default 0
+  disablePropagationCheck: "false" # optional, default false
+  resolvers: # optional
+    - 1.1.1.1
+  name: "le_dns" # Name of the certificate resolver
+  key_type: "RSA4096" # optional, per default RSA4096
 ```
 And please set the `traefik_default_cert_resovler` to the default cert resolver which you want to use for example for the dashboard.
 #### Middlewares
