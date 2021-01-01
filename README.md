@@ -12,7 +12,7 @@ Ansible role for a traefik installation without docker
 | ------------- | -------- | ------------- | ------- |
 | `traefik_user` | User created for running the traefik service | traefik |
 | `traefik_group` | Group for the user created for the traefik service | `{{ traefik_user }}` |
-| `traefik_version` | Version of traefik that is going to be installed | `v2.2.2`  | 
+| `traefik_version` | Version of traefik that is going to be installed | `v2.3.6`  | 
 | `traefik_source` | Source of the wekan Installtion package | `https://github.com/containous/traefik/releases/download/{{ traefik_version }}/traefik_{{ traefik_version }}_linux_amd64.tar.gz` |
 | `traefik_systemd_service_name` | The name of the systemd service file | `traefik` |
 | `traefik_base_path` | Installation base path | `/opt/traefik` | Without trailing slash 
@@ -78,6 +78,15 @@ The HTTPS-Redirect middleware is activated by default when TLS is activated with
 traefik_middlewares_https_redirect_enable: no
 ```
 
+##### WWW to non-WWW redirect
+The HTTPS-Redirect middleware is deactivated by default. If you want to enable this middleware set the following environment variable to enable.
+```yaml
+traefik_middlewares_www_to_non_www_redirect:
+  enable: yes
+  name: "www_redirect" # required
+  persistent: true # whether 301 redirect should be used; defaults to true 
+```
+
 ##### Dashboard Basic Authentication
 By default this middleware is deactivated, so anybody can access the traefik dashboard. But you can enable this middleware with the following variable. If you activate the middleware and also enable the `traefik_dashboard` variable, the middleware will be used.
 ```yaml
@@ -101,7 +110,7 @@ traefik_middlewares_cors:
 ```
 
 ##### HSTS
-The HTTPS-Redirect middleware is activated by default when TLS is activated with the name `https_redirect`, which can be modified with the `traefik_middlewares_https_redirect_name` variable. If you wanna disable this middleware use the following environment variable.
+The HTTPS-Redirect middleware is activated by default when TLS is activated with the name `https_redirect`, which can be modified with the `traefik_middlewares_https_redirect_name` variable. If you want to disable this middleware use set `enable` of the following environment variable to `false`. You can also customize the middleware with the variable.
 ```yaml
 traefik_middlewares_hsts:
   enable: yes

@@ -39,7 +39,8 @@ traefik_middlewares_cors:
   enable: no
 traefik_middlewares_hsts:
   enable: no
-
+traefik_middlewares_www_to_non_www_redirect:
+  enable: no
 traefik_dashboard:
   enable: yes
   rule: "Host(`traefik.{{ ansible_fqdn }}`)"

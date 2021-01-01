@@ -5,6 +5,13 @@ http:
       redirectScheme:
         scheme: "https"
 {% endif %}
+{% if traefik_middlewares_www_to_non_www_redirect.enable %}
+    {{ traefik_middlewares_www_to_non_www_redirect.name }}:
+      redirectRegex:
+        regex: "^(.*)://www.(.*)"
+        replacement: "$1://$2"
+        permanent: {{ traefik_middlewares_www_to_non_www_redirect.permanent | default('true') }}
+{% endif %}
 {% if traefik_middlewares_dashboard_authentication.enable %}
     {{ traefik_middlewares_dashboard_authentication.name }}:
       basicAuth:
